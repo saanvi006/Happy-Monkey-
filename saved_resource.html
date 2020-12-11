@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- saved from url=(0012)about:srcdoc -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js" crossorigin=""></script>
+    
+    
+<script src="https://assets.editor.p5js.org/5f008a70555b41002405b4df/690d214a-197d-4ba7-8ac2-a5577d439929.js" crossorigin=""></script>
+  <!--<base href="https://editor.p5js.org/saanvibagri/sketches/FNUppPWLdC/">--><base href="."><style>
+html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+</style><script src="https://editor.p5js.org/previewScripts.js"></script><style data-emotion=""></style><script>
+    function getScriptOff(line) {
+      var offs = [[70,"sketch"]];
+      var l = 0;
+      var file = '';
+      for (var i=0; i<offs.length; i++) {
+        var n = offs[i][0];
+        if (n < line && n > l) {
+          l = n;
+          file = offs[i][1];
+        }
+      }
+      return [line - l, file];
+    }
+    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+    window.onerror = function (msg, url, lineNumber, columnNo, error) {
+        var string = msg.toLowerCase();
+        var substring = "script error";
+        var data = {};
+        if (url.match(/^(http:\/\/|https:\/\/)/) !== null && error.stack){
+          var errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
+          var fileInfo = getScriptOff(errorNum);
+          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
+        } else {
+          var fileInfo = getScriptOff(lineNumber);
+          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
+        }
+        window.parent.postMessage([{
+          log: [{
+            method: 'error',
+            data: [data],
+            id: Date.now().toString()
+          }],
+          source: fileInfo[1]
+        }], '*');
+      return false;
+    };
+    // catch rejected promises
+    window.onunhandledrejection = function (event) {
+      if (event.reason && event.reason.message && event.reason.stack){
+        var errorNum = event.reason.stack.split('about:srcdoc:')[1].split(':')[0];
+        var fileInfo = getScriptOff(errorNum);
+        var data = event.reason.message + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
+        window.parent.postMessage([{
+          log: [{
+            method: 'error',
+            data: [data],
+            id: Date.now().toString()
+          }],
+          source: fileInfo[1]
+        }], '*');
+      }
+    };
+  </script></head>
+  <body>
+    <script data-tag="@fs-sketch.js"> var ball,paddle
+
+function preload(){
+  img1 = loadImage("https://assets.editor.p5js.org/5f008a70555b41002405b4df/35bef7da-330c-46ff-a082-2f888317ffd6.png");
+  img2 = loadImage("https://assets.editor.p5js.org/5f008a70555b41002405b4df/e4c0c28d-4826-4d8e-b5f5-6eb7ff9d38fc.png")
+}
+
+
+
+
+function setup() {
+  createCanvas(400, 400);
+   
+  ball = createSprite(100,200,20,20)
+  ball.addImage(img1)
+  ball.velocityX = 8
+  ball.velocityY = 8
+  
+  paddle = createSprite(300,200,20,40)
+  paddle.addImage(img2)
+  
+  computerScore = 0
+  playerScore = 0
+  gameState = "serve"
+  
+ 
+  
+}
+
+function draw() {
+  background("lightblue");
+  edges = createEdgeSprites();
+  ball.bounceOff(edges[0])
+  ball.bounceOff(edges[2])
+  ball.bounceOff(edges[3])
+  ball.bounceOff(paddle)
+  
+if(keyDown("space"))
+    {
+      ball.velocityX = 8
+      ball.velocityY = 8
+    }
+  if( ball.x>400)
+{
+  ball.x=200
+  ball.y=200
+  computerScore++
+  ball.velocityY=0
+      ball.velocityX=0
+}  
+  
+  if(computerScore===5)
+    {
+      text("Game Over",150,100)
+      ball.velocityY=0
+      ball.velocityX=0
+    }      
+  
+  text(computerScore,170,20)
+  text(playerScore,230,20)
+  
+  
+  paddle.y = mouseY   
+  drawSprites();
+  
+}</script>
+  
+
+<canvas id="defaultCanvas0" class="p5Canvas" width="800" height="800" style="width: 400px; height: 400px;"></canvas></body></html>
